@@ -10,6 +10,7 @@ var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
 //Hits and Misses Variables//
 var hits = [];
 var misses = [];
+var wrongGuess = 0;
 
 var movieTitles = ['jaws', 'spaceballs', 'minions'];
 
@@ -27,6 +28,11 @@ console.log("outside is " + dashesArray);
 
 var dashesHTML = document.getElementById('word');
 dashesHTML.innerHTML = dashesArray;
+
+var missesHTML = document.getElementById('missesBank');
+
+var messageHTML = document.getElementById('messages');
+
 //try array.join//
 // var a = ['Wind', 'Rain', 'Fire'];
 // a.join();    // 'Wind,Rain,Fire'
@@ -35,23 +41,34 @@ dashesHTML.innerHTML = dashesArray;
 document.onkeyup = function (e) {
     userGuess = e.key;
     console.log(userGuess);
+    
 
     if (alphabet.indexOf(userGuess) === -1) {
         console.log("Not a Valid Guess");
     } else {
         console.log("Woohoo!");
         if (randoWordArray.indexOf(userGuess) === -1) {
-            alert("Bad Guess, but Good Try");
+            console.log("Bad Guess, but Good Try!");
             misses.push(userGuess);
             console.log(misses);
+            missesHTML.innerHTML = misses;
+            wrongGuess += 1;
+            if(wrongGuess === 6)    {
+                messageHTML.textContent = "You Lose!";
+            }
+            
         } else {
-            alert("Good Guess!!");
+            console.log("Good Guess!!");
             hits.push(userGuess);
             console.log("Good guesses " + hits);
             randoWordArray.forEach(function (ltr, idx) {
                 if (userGuess === ltr) {
                     dashesArray[idx] = ltr;
                     dashesHTML.innerHTML = dashesArray;
+                    if(dashesArray.indexOf(' _ ')=== -1)    {
+                        messageHTML.textContent = "You Win!!";
+                        console.log("No More Dashes");
+                    }
                 }
 
             })
