@@ -17,7 +17,7 @@ var misses = [];
 var wrongGuess = 0;
 
 //Still need to come up with a cohesive theme and add new words to extend the game//
-var movieTitles = ['the producers', 'the twelve chairs', 'blazing saddles', 'young frankenstein', 'silent movie', 'high anxiety', 'history of the world', 'to be or not to be', 'spaceballs'];
+var movieTitles = ['producers', 'twelvechairs', 'spaceballs'];
 //Creates a variable called missesHTML that writes the letter misses from the function below onto the HTML.
 var missesHTML = document.getElementById('missesBank');
 
@@ -78,6 +78,14 @@ function playGame() {
                 missesHTML.innerHTML = misses;
                 wrongGuess += 1;
                 console.log(wrongGuess);
+                if (wrongGuess === 6) {
+                    messageHTML.textContent = "You Lose!";
+                  /*  userGuess = "";
+                    randoWord = "";
+                    randoWordArray = [];
+                    dashesArray = [];
+                    startGame(); */
+                }
 
 
 
@@ -88,14 +96,14 @@ function playGame() {
                 console.log("Good guesses " + hits);
                 randoWordArray.forEach(function (ltr, idx) {
                     if (userGuess === ltr) {
-                        console.log(idx);
-                        console.log(ltr);
                         dashesArray[idx] = ltr;
-
-                         dashesHTML.innerHTML = dashesArray;
-
+                        dashesHTML.innerHTML = dashesArray;
+                        if(dashesArray.indexOf(' _ ')=== -1)    {
+                            messageHTML.textContent = "You Win!!";
+                            console.log("No More Dashes");
+                        }
                     }
-
+    
                 })
             }
         };
@@ -104,9 +112,9 @@ function playGame() {
 }
 
 playGame();
-endGame();
+//endGame();
 
-
+/*
 function endGame() {
     if (wrongGuess === 6) {
         messageHTML.textContent = "You Lose!";
@@ -114,7 +122,7 @@ function endGame() {
         randoWord = "";
         randoWordArray = [];
         dashesArray = [];
-        startGame(); */
+        startGame();
     } else if (dashesArray.indexOf('_') === -1) {
         messageHTML.textContent = "You Win!!";
         console.log("No More Dashes");
@@ -122,13 +130,13 @@ function endGame() {
         randoWord = "";
         randoWordArray = [];
         dashesArray = [];
-        startGame(); */
+        startGame();
     }
+    
 
 
 
-}
-
+} */
 
 
 
