@@ -1,11 +1,12 @@
 
 
 
-//Basic variables to establish a simple framework.  A user guess, the use of regular expressions, and the var alphabet
+//Basic variables to establish a simple framework.  
 var userGuess;
 var randoWord;
 var randoWordArray = [];
 var dashesArray = ["_", "_", "_", "_"];
+var winCounter = 0;
 var regExLetters = /^[a-z]+$/i;
 var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 var dashesHTML = document.getElementById('word');
@@ -16,8 +17,8 @@ var hits = [];
 var misses = [];
 var wrongGuess = 0;
 
-//Still need to come up with a cohesive theme and add new words to extend the game//
-var movieTitles = ['producers', 'twelvechairs', 'spaceballs'];
+//Couldn't figure out how to manage two word answers so decided on one word movie titles!
+var movieTitles = ['jaws'];
 //Creates a variable called missesHTML that writes the letter misses from the function below onto the HTML.
 var missesHTML = document.getElementById('missesBank');
 
@@ -43,7 +44,7 @@ function startGame() {
     // });
     console.log("outside is " + dashesArray);
 
-    dashesHTML.innerHTML = dashesArray;
+    dashesHTML.innerHTML = dashesArray.join(" ");;
 
     //try array.join to remove the commas from the dashes.
     // var a = ['Wind', 'Rain', 'Fire'];
@@ -63,6 +64,7 @@ document.getElementById("button").addEventListener("click", startGame);
 function playGame() {
     document.onkeyup = function (e) {
         userGuess = e.key;
+        var startValue = 0
         console.log(userGuess);
 
         //tells the user that if they choose a letter that is not in the alphabet, this is "Not a Valid Guess".
@@ -97,7 +99,7 @@ function playGame() {
                 randoWordArray.forEach(function (ltr, idx) {
                     if (userGuess === ltr) {
                         dashesArray[idx] = ltr;
-                        dashesHTML.innerHTML = dashesArray;
+                        dashesHTML.innerHTML = dashesArray.join(" ");;
                         if(dashesArray.indexOf(' _ ')=== -1)    {
                             messageHTML.textContent = "You Win!!";
                             console.log("No More Dashes");
