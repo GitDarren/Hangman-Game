@@ -9,13 +9,22 @@
     <title>Hangman</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="assets/css/reset.css">    
+    <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
-    <h1>Hangman!</h1>
-    <div id="word"></div>
-    <div id="missesBank"></div>
+    <h1 class="headings">Mel Brooks' Hangman!</h1>
+    <div id="wins">
+        <h2 class="headings">Wins:</h2>
+    </div>
+    <div class="content">
+        <h3 class="headings">Can you guess the Correct Mel Brooks Film?</h3>
+
+        <div id="word"></div>
+        <h4 class="headings">Missed Letters</h4>
+        <div id="missesBank"></div>
+    </div>
     <div id="messages"></div>
     <script src="assets/javascript/game.js"></script>
 </body>

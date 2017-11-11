@@ -4,7 +4,7 @@
 //Basic variables to establish a simple framework.  A user guess, the use of regular expressions, and the var alphabet
 var userGuess;
 var regExLetters = /^[a-z]+$/i;
-var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' '];
 
 
 //Hits and Misses Variables//
@@ -13,7 +13,7 @@ var misses = [];
 var wrongGuess = 0;
 
 //Still need to come up with a cohesive theme and add new words to extend the game//
-var movieTitles = ['jaws', 'spaceballs', 'minions'];
+var movieTitles = ['the producers', 'the twelve chairs', 'blazing saddles', 'young frankenstein', 'silent movie', 'high anxiety', 'history of the world', 'to be or not to be', 'spaceballs'];
 
 //allows javascript to come up with a random number multipied by the index length of movieTitles and rounds it down to a whole integer.  Output is a number.
 var randoWord = movieTitles[Math.floor(Math.random() * movieTitles.length)];
@@ -24,7 +24,7 @@ var randoWordArray = randoWord.split('');
 console.log(randoWordArray);
 
 //Maps over each individual letter from the random word array with a dash.
-var dashesArray = randoWordArray.map(a=>'_ ');
+var dashesArray = randoWordArray.map(a=>' _ ');
 //     console.log("inside is " + ltr);
 //     return ' _ ';
 
