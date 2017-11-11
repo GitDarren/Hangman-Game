@@ -114,31 +114,6 @@ function playGame() {
 }
 
 playGame();
-//endGame();
-
-/*
-function endGame() {
-    if (wrongGuess === 6) {
-        messageHTML.textContent = "You Lose!";
-      /*  userGuess = "";
-        randoWord = "";
-        randoWordArray = [];
-        dashesArray = [];
-        startGame();
-    } else if (dashesArray.indexOf('_') === -1) {
-        messageHTML.textContent = "You Win!!";
-        console.log("No More Dashes");
-      /*  userGuess = "";
-        randoWord = "";
-        randoWordArray = [];
-        dashesArray = [];
-        startGame();
-    }
-    
-
-
-
-} */
 
 
 
