@@ -5,10 +5,9 @@
 var userGuess;
 var randoWord;
 var randoWordArray = [];
-var dashesArray = ["_", "_", "_", "_"];
+var dashesArray;
 var winCounter = 0;
-var regExLetters = /^[a-z]+$/i;
-var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+var alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 var dashesHTML = document.getElementById('word');
 
 
@@ -18,15 +17,21 @@ var misses = [];
 var wrongGuess = 0;
 
 //Couldn't figure out how to manage two word answers so decided on one word movie titles!
-var movieTitles = ['jaws'];
+var movieTitles = ['JAWS', 'SPACEBALLS', 'FRIDAY', 'BRAZIL', 'VERTIGO', 'BABE', 'NASHVILLE', 'NETWORK', 'GIANT', 'PSYCHO', 'MANHATTAN', 'FARGO', 'AMADEUS', 'GOODFELLAS', 'FEARLESS', 'UNFORGIVEN', 'CASINO', 'CRASH', 'SCARFACE', 'ROCKY', 'PATTON', 'MASH', 'PLATOON', 'BATMAN', 'MEMENTO', 'CHINATOWN', 'LOLITA', 'NOSFERATU', 'SIDEWAYS', 'MAGNOLIA', 'OLDBOY', 'MISERY', 'HARVEY', 'RED', 'MUD'];
 //Creates a variable called missesHTML that writes the letter misses from the function below onto the HTML.
 var missesHTML = document.getElementById('missesBank');
 
 //Creates a variable called messagesHTML that writes the messages from the function below onto the HTML.
 var messageHTML = document.getElementById('messages');
 
+//Tells the game not to do anything until the button is clicked!//
+document.getElementById("button").addEventListener("click", startGame);
+
+
+//Starts the Game with no ERRORS! YAY!!!//
 //allows javascript to come up with a random number multipied by the index length of movieTitles and rounds it down to a whole integer.  Output is a number.
 function startGame() {
+    playGame();
     randoWord = movieTitles[Math.floor(Math.random() * movieTitles.length)];
     console.log(randoWord);
 
@@ -36,40 +41,32 @@ function startGame() {
 
     //Maps over each individual letter from the random word array with a dash.
     dashesArray = randoWordArray.map(a => ' _ ');
-    //     console.log("inside is " + ltr);
-    //     return ' _ ';
 
-
-    //     (a=>'_').join(' ');
-    // });
     console.log("outside is " + dashesArray);
 
     dashesHTML.innerHTML = dashesArray.join(" ");;
 
-    //try array.join to remove the commas from the dashes.
-    // var a = ['Wind', 'Rain', 'Fire'];
-    // a.join();    // 'Wind,Rain,Fire'
-    // a.join('-'); // 'Wind-Rain-Fire'
-
     //I want to start the game with a PUSH PLAY functionality so that user initiates the game on their own.
-    //I would like to have more than one category to choose from so that players can try different games.
     //If I can figure it out, I would like a total wins recorded section.
     //This currently starts the game and allows the user to start by pushing any key.
 
 }
 
-document.getElementById("button").addEventListener("click", startGame);
 
+
+//et the game to start only once the Start the Game button is pushed, but that's not happening right now. 
 
 function playGame() {
     document.onkeyup = function (e) {
-        userGuess = e.key;
-        var startValue = 0
-        console.log(userGuess);
+        var userGuess = e.key.toUpperCase();
+        var startValue = 0;
+        console.log(`userGuess is ${userGuess}`);
 
-        //tells the user that if they choose a letter that is not in the alphabet, this is "Not a Valid Guess".
+        //tells the user that if they ch
+
+        //I'm trying to goose a letter that is not in the alphabet, this is "Not a Valid Guess".
         if (alphabet.indexOf(userGuess) === -1) {
-            console.log("Not a Valid Guess");
+            alert("Not a Valid Guess");
         } else {
             console.log("Woohoo!");
             //If the user presses a letter not in the word, they see the letter appear below the dashed word and after 6 faulty tries, they get a message stating "You Lose"
@@ -82,11 +79,11 @@ function playGame() {
                 console.log(wrongGuess);
                 if (wrongGuess === 6) {
                     messageHTML.textContent = "You Lose!";
-                  /*  userGuess = "";
-                    randoWord = "";
-                    randoWordArray = [];
-                    dashesArray = [];
-                    startGame(); */
+                    /*  userGuess = "";
+                      randoWord = "";
+                      randoWordArray = [];
+                      dashesArray = [];
+                      startGame(); */
                 }
 
 
@@ -97,15 +94,18 @@ function playGame() {
                 hits.push(userGuess);
                 console.log("Good guesses " + hits);
                 randoWordArray.forEach(function (ltr, idx) {
+                    console.log("good guess foreach");
                     if (userGuess === ltr) {
-                        dashesArray[idx] = ltr;
-                        dashesHTML.innerHTML = dashesArray.join(" ");;
-                        if(dashesArray.indexOf(' _ ')=== -1)    {
-                            messageHTML.textContent = "You Win!!";
-                            console.log("No More Dashes");
-                        }
+                        dashesArray[idx] = `${ltr}`;
+                        console.log(`${userGuess} is ${ltr}?`)
+                        dashesHTML.innerHTML = dashesArray.join(" ");
+                        // if (dashesArray.indexOf(' _ ') === -1) {
+                        // messageHTML.textContent = "You Win!!";
+                        // console.log("No More Dashes");
+                        checkWin();
+                        // }
                     }
-    
+
                 })
             }
         };
@@ -113,10 +113,23 @@ function playGame() {
 
 }
 
-playGame();
+function checkWin() {
+    if (dashesArray.indexOf(' _ ') === -1) {
+        messageHTML.textContent = "You Win!!";
+        setTimeout(() => {
+            reset();
+        }, 1500);
+    }
+}
 
-
-
+function reset() {
+    hits = [];
+    misses = [];
+    wrongGuess = 0;
+    startGame;
+    console.log("reset isn't working");
+    console.log(wrongGuess);
+};
 
 
 
