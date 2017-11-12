@@ -32,7 +32,7 @@ var startButton = document.getElementById("button").addEventListener("click", st
 
 
 //Starts the Game with no ERRORS! YAY!!!//
-//allows javascript to come up with a random number multipied by the index length of movieTitles and rounds it down to a whole integer.  Output is a number.
+// Sets the game, randomly selects the word, creates a dashed array the same lenght of the word, and finally removes the commas out of the dashesArray
 function startGame() {
     playGame();
     randoWord = movieTitles[Math.floor(Math.random() * movieTitles.length)];
@@ -48,16 +48,11 @@ function startGame() {
     console.log("outside is " + dashesArray);
 
     dashesHTML.innerHTML = dashesArray.join(" ");;
-
-    //I want to start the game with a PUSH PLAY functionality so that user initiates the game on their own.
-    //If I can figure it out, I would like a total wins recorded section.
-    //This currently starts the game and allows the user to start by pushing any key.
-
 }
 
 
 
-//Let the game to start only once the Start the Game button is pushed, but that's not happening right now. 
+//Let the game to start only once the Start the Game button is pushed.   
 
 function playGame() {
     document.onkeyup = function (e) {
@@ -65,14 +60,13 @@ function playGame() {
         var startValue = 0;
         console.log(`userGuess is ${userGuess}`);
 
-        //tells the user that if they ch
+        //tells the user that if they choose an non alpha number, "not a Valid Guess"
 
-        //I'm trying to goose a letter that is not in the alphabet, this is "Not a Valid Guess".
         if (alphabet.indexOf(userGuess) === -1) {
             alert("Not a Valid Guess");
         } else {
-            console.log("Woohoo!");
-            //If the user presses a letter not in the word, they see the letter appear below the dashed word and after 6 faulty tries, they get a message stating "You Lose"
+            
+            //If the user presses a letter not in the word, they see the letter appear below the dashed word//
             if (randoWordArray.indexOf(userGuess) === -1) {
                 console.log("Bad Guess, but Good Try!");
                 misses.push(userGuess);
@@ -102,22 +96,21 @@ function playGame() {
 
 }
 
-
+//Checks if the user wins the game if they remove all the dashes. 
 function checkWin() {
     if (dashesArray.indexOf(' _ ') === -1) {
         messageHTML.textContent = "You Win!!";
         winCounter++;
-        
             reset();
-        
         setTimeout(() => {
         }, 2000);
     }
     document.getElementById('wins').textContent = winCounter;    
     console.log(winCounter);
+    //Updates the Win Counter each time the user wins.  
     
 };
-
+//Checks if the user loses by picking six wrong guesses.  
 function checkLoss() {
     if (wrongGuess === 6) {
         messageHTML.textContent = "You Loss Sucka!!";
@@ -127,13 +120,14 @@ function checkLoss() {
     }
 };
 
+//Resets the game and ask the user if they want to play again
 function reset() {
     hits = [];
     misses = [];
     wrongGuess = 0;
     missesBank.textContent = "";
     messages.textContent = "";
-    button.textContent = "Restart the Game?";
+    button.textContent = "Play Again?";
 
     startButton;
 };
@@ -144,10 +138,8 @@ function reset() {
 
 
 //What else I still need to do
-//Create a way, possibly using While loop, that the game stops when the user wins or loses.  Right now the player can keep on going
-//Create a way to tally the wins and losses if possible
-//Creae a function that allows the user to restart the game
-//Of course still add CSS and way to animate a hangman game as the user plays
+//create a way to not allow for letters to be guessed more than one time
+//Still add CSS and way to animate a hangman game as the user plays
 //Tell Erik his Patriots suck!
 
 
