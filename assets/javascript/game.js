@@ -15,6 +15,7 @@ var dashesHTML = document.getElementById('word');
 var hits = [];
 var misses = [];
 var wrongGuess = 0;
+var missesRemaining = 6;
 
 //Couldn't figure out how to manage two word answers so decided on one word movie titles!
 var movieTitles = ['JAWS', 'SPACEBALLS', 'FRIDAY', 'BRAZIL', 'VERTIGO', 'BABE', 'NASHVILLE', 'NETWORK', 'GIANT', 'PSYCHO', 'MANHATTAN', 'FARGO', 'AMADEUS', 'GOODFELLAS', 'FEARLESS', 'UNFORGIVEN', 'CASINO', 'CRASH', 'SCARFACE', 'ROCKY', 'PATTON', 'MASH', 'PLATOON', 'BATMAN', 'MEMENTO', 'CHINATOWN', 'LOLITA', 'NOSFERATU', 'SIDEWAYS', 'MAGNOLIA', 'OLDBOY', 'MISERY', 'HARVEY', 'RED', 'MUD'];
@@ -25,7 +26,9 @@ var missesHTML = document.getElementById('missesBank');
 var messageHTML = document.getElementById('messages');
 
 //Tells the game not to do anything until the button is clicked!//
-document.getElementById("button").addEventListener("click", startGame);
+var startButton = document.getElementById("button").addEventListener("click", startGame);
+
+
 
 
 //Starts the Game with no ERRORS! YAY!!!//
@@ -54,7 +57,7 @@ function startGame() {
 
 
 
-//et the game to start only once the Start the Game button is pushed, but that's not happening right now. 
+//Let the game to start only once the Start the Game button is pushed, but that's not happening right now. 
 
 function playGame() {
     document.onkeyup = function (e) {
@@ -76,19 +79,8 @@ function playGame() {
                 console.log(misses);
                 missesHTML.innerHTML = misses;
                 wrongGuess += 1;
-                console.log(wrongGuess);
-                if (wrongGuess === 6) {
-                    messageHTML.textContent = "You Lose!";
-                    /*  userGuess = "";
-                      randoWord = "";
-                      randoWordArray = [];
-                      dashesArray = [];
-                      startGame(); */
-                }
+                checkLoss();
 
-
-
-                //If the user presses a letter in the word, it fills in the letter in the appropriate location.  If they complete the word, they get the message "You Win"
             } else {
                 console.log("Good Guess!!");
                 hits.push(userGuess);
@@ -99,36 +91,51 @@ function playGame() {
                         dashesArray[idx] = `${ltr}`;
                         console.log(`${userGuess} is ${ltr}?`)
                         dashesHTML.innerHTML = dashesArray.join(" ");
-                        // if (dashesArray.indexOf(' _ ') === -1) {
-                        // messageHTML.textContent = "You Win!!";
-                        // console.log("No More Dashes");
                         checkWin();
                         // }
                     }
 
                 })
             }
-        };
-    }
+        }
+    };
 
 }
+
 
 function checkWin() {
     if (dashesArray.indexOf(' _ ') === -1) {
         messageHTML.textContent = "You Win!!";
+        winCounter++;
+        
+            reset();
+        
+        setTimeout(() => {
+        }, 2000);
+    }
+    document.getElementById('wins').textContent = winCounter;    
+    console.log(winCounter);
+    
+};
+
+function checkLoss() {
+    if (wrongGuess === 6) {
+        messageHTML.textContent = "You Loss Sucka!!";
         setTimeout(() => {
             reset();
-        }, 1500);
+        }, 2000);
     }
-}
+};
 
 function reset() {
     hits = [];
     misses = [];
     wrongGuess = 0;
-    startGame;
-    console.log("reset isn't working");
-    console.log(wrongGuess);
+    missesBank.textContent = "";
+    messages.textContent = "";
+    button.textContent = "Restart the Game?";
+
+    startButton;
 };
 
 
