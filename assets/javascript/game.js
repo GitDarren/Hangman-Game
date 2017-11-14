@@ -14,11 +14,21 @@ var dashesHTML = document.getElementById('word');
 //Hits and Misses Variables//
 var hits = [];
 var misses = [];
-var wrongGuess = 0;
-var missesRemaining = 6;
+var wrongGuess = 6;
 
 //Couldn't figure out how to manage two word answers so decided on one word movie titles!
-var movieTitles = ['JAWS', 'SPACEBALLS', 'FRIDAY', 'BRAZIL', 'VERTIGO', 'BABE', 'NASHVILLE', 'NETWORK', 'GIANT', 'PSYCHO', 'MANHATTAN', 'FARGO', 'AMADEUS', 'GOODFELLAS', 'FEARLESS', 'UNFORGIVEN', 'CASINO', 'CRASH', 'SCARFACE', 'ROCKY', 'PATTON', 'MASH', 'PLATOON', 'BATMAN', 'MEMENTO', 'CHINATOWN', 'LOLITA', 'NOSFERATU', 'SIDEWAYS', 'MAGNOLIA', 'OLDBOY', 'MISERY', 'HARVEY', 'RED', 'MUD'];
+var movieTitles = [
+    {
+        //    movieName: 'JAWS',
+        //    poster: '../assets/images/jawsposter.jpg'
+        // }, {
+        movieName: 'SPACEBALLS',
+        poster: '../Hangman-Game/assets/images/spaceballsposter.jpg'
+        // }, {
+        //     movieName:  'BABE',
+        //     poster: '../assets/images/babemovie.jpg'
+    }
+       /*'FRIDAY', 'BRAZIL', 'VERTIGO' , 'NASHVILLE', 'NETWORK', 'GIANT', 'PSYCHO', 'MANHATTAN', 'FARGO', 'AMADEUS', 'GOODFELLAS', 'FEARLESS', 'UNFORGIVEN', 'CASINO', 'CRASH', 'SCARFACE', 'ROCKY', 'PATTON', 'MASH', 'PLATOON', 'BATMAN', 'MEMENTO', 'CHINATOWN', 'LOLITA', 'NOSFERATU', 'SIDEWAYS', 'MAGNOLIA', 'OLDBOY', 'MISERY', 'HARVEY', 'RED', 'MUD'*/];
 //Creates a variable called missesHTML that writes the letter misses from the function below onto the HTML.
 var missesHTML = document.getElementById('missesBank');
 
@@ -28,6 +38,10 @@ var messageHTML = document.getElementById('messages');
 //Tells the game not to do anything until the button is clicked!//
 var startButton = document.getElementById("button").addEventListener("click", startGame);
 
+//Add Pseudocode!!!
+var missesRemaining = document.getElementById("missesRemaining");
+
+var index;
 
 
 
@@ -35,7 +49,8 @@ var startButton = document.getElementById("button").addEventListener("click", st
 // Sets the game, randomly selects the word, creates a dashed array the same lenght of the word, and finally removes the commas out of the dashesArray
 function startGame() {
     playGame();
-    randoWord = movieTitles[Math.floor(Math.random() * movieTitles.length)];
+    index = Math.floor(Math.random() * movieTitles.length);
+    randoWord = movieTitles[index].movieName;
     console.log(randoWord);
 
     //Creates an array out of the individual letters that are split out from the word. 
@@ -47,8 +62,19 @@ function startGame() {
 
     console.log("outside is " + dashesArray);
 
-    dashesHTML.innerHTML = dashesArray.join(" ");;
+    dashesHTML.innerHTML = dashesArray.join(" ");
+
+    missesBank.textContent = "";
+    messages.textContent = "";
+
+    missesRemaining.innerHTML = "Misses Remaining: " + wrongGuess;
+     if(document.getElementsByTagName('img') ) {
+        document.getElementsByTagName('img')[0].innerHTML = "";
+     }
+    console.log(document.getElementsByTagName('img'));
 }
+
+
 
 
 
@@ -56,23 +82,29 @@ function startGame() {
 
 function playGame() {
     document.onkeyup = function (e) {
+        console.log(e);
         var userGuess = e.key.toUpperCase();
-        var startValue = 0;
-        console.log(`userGuess is ${userGuess}`);
-
-        //tells the user that if they choose an non alpha number, "not a Valid Guess"
-
         if (alphabet.indexOf(userGuess) === -1) {
-            alert("Not a Valid Guess");
+            return;
         } else {
-            
+            var startValue = 0;
+            console.log(`userGuess is ${userGuess}`);
+
+            //tells the user that if they choose an non alpha number, "not a Valid Guess"
+
+
+
             //If the user presses a letter not in the word, they see the letter appear below the dashed word//
             if (randoWordArray.indexOf(userGuess) === -1) {
                 console.log("Bad Guess, but Good Try!");
                 misses.push(userGuess);
                 console.log(misses);
                 missesHTML.innerHTML = misses;
-                wrongGuess += 1;
+                wrongGuess -= 1;
+                missesRemaining.innerHTML = "Misses Remaining: " + wrongGuess;
+                console.log(missesRemaining);
+
+
                 checkLoss();
 
             } else {
@@ -101,22 +133,26 @@ function checkWin() {
     if (dashesArray.indexOf(' _ ') === -1) {
         messageHTML.textContent = "You Win!!";
         winCounter++;
-            reset();
-        setTimeout(() => {
-        }, 2000);
+        var img = document.createElement('img');
+        img.setAttribute('src', movieTitles[index].poster);
+        document.getElementById('content').appendChild(img);
+        reset();
     }
-    document.getElementById('wins').textContent = winCounter;    
+    document.getElementById('wins').textContent = winCounter;
     console.log(winCounter);
+
+
     //Updates the Win Counter each time the user wins.  
-    
+
 };
 //Checks if the user loses by picking six wrong guesses.  
 function checkLoss() {
-    if (wrongGuess === 6) {
-        messageHTML.textContent = "You Loss Sucka!!";
-        setTimeout(() => {
-            reset();
-        }, 2000);
+    if (wrongGuess === 0) {
+        messageHTML.textContent = "You Lose Sucka!!";
+
+        // setTimeout(() => {
+        reset();
+        // }, 2000);
     }
 };
 
@@ -124,11 +160,8 @@ function checkLoss() {
 function reset() {
     hits = [];
     misses = [];
-    wrongGuess = 0;
-    missesBank.textContent = "";
-    messages.textContent = "";
+    wrongGuess = 6;
     button.textContent = "Play Again?";
-
     startButton;
 };
 
