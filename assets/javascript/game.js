@@ -19,14 +19,14 @@ var wrongGuess = 6;
 //Couldn't figure out how to manage two word answers so decided on one word movie titles!
 var movieTitles = [
     {
-        //    movieName: 'JAWS',
-        //    poster: '../assets/images/jawsposter.jpg'
-        // }, {
+           movieName: 'JAWS',
+           poster: '../Hangman-Game/assets/images/jawsposter.jpg'
+        }, {
         movieName: 'SPACEBALLS',
         poster: '../Hangman-Game/assets/images/spaceballsposter.jpg'
-        // }, {
-        //     movieName:  'BABE',
-        //     poster: '../assets/images/babemovie.jpg'
+        }, {
+            movieName:  'BABE',
+            poster: '../Hangman-Game/assets/images/babemovie.jpg'
     }
        /*'FRIDAY', 'BRAZIL', 'VERTIGO' , 'NASHVILLE', 'NETWORK', 'GIANT', 'PSYCHO', 'MANHATTAN', 'FARGO', 'AMADEUS', 'GOODFELLAS', 'FEARLESS', 'UNFORGIVEN', 'CASINO', 'CRASH', 'SCARFACE', 'ROCKY', 'PATTON', 'MASH', 'PLATOON', 'BATMAN', 'MEMENTO', 'CHINATOWN', 'LOLITA', 'NOSFERATU', 'SIDEWAYS', 'MAGNOLIA', 'OLDBOY', 'MISERY', 'HARVEY', 'RED', 'MUD'*/];
 //Creates a variable called missesHTML that writes the letter misses from the function below onto the HTML.
@@ -68,10 +68,10 @@ function startGame() {
     messages.textContent = "";
 
     missesRemaining.innerHTML = "Misses Remaining: " + wrongGuess;
-     if(document.getElementsByTagName('img') ) {
-        document.getElementsByTagName('img')[0].innerHTML = "";
+     if(document.getElementsByTagName('img').length > 0 ) {
+        document.getElementsByTagName('img')[0].style.display = 'none';
      }
-    console.log(document.getElementsByTagName('img'));
+    console.log(document.getElementsByTagName('img').length);
 }
 
 
